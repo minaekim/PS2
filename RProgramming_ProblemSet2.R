@@ -1,9 +1,11 @@
 # R Programming
 # Problem Set 2: Functions 
 # Author: Jonas Markgraf
+# Contributor: Hyunjoo Oh
 # =========================
 
 
+### Benford's law
 ## 1) Calculating violations
 ## ========================
 
@@ -13,8 +15,7 @@ prop_vote <- sample(1:1000000, size=100000)
 
 # create function for "m" and "d" statistic -------------------------
 violations <- function(x, m = TRUE, d = TRUE) { # by default, give "m" and "d" statistic
-  first.digit <- as.character(prop_vote) # extract first digit of prop_vote vector
-  first.digit <- substr(first.digit, start=1, stop=1)
+  first.digit <- substr(as.character(x), start = 1, stop = 1) # extract first digit of prop_vote vector
   first.digit <- as.integer(first.digit)
   Xi <- table(first.digit)/length(prop_vote) # generate observed proportional frequency vector
   if(m == T & d == F) {
@@ -37,17 +38,18 @@ violations(prop_vote)
 violations(prop_vote, m = F)
 violations(prop_vote, d = F, m = F)
 
+
+
 ## 2) Critical Values
 ## ===================
 
 # create function for critical values ------------------
 
-print.benfords <- function(prop_vote, m = TRUE, d = TRUE) { # by default, give "m" and "d" statistic
-  first.digit <- as.character(prop_vote) # extract first digit of prop_vote vector
-  first.digit <- substr(first.digit, start=1, stop=1)
+print.benfords <- function(x, m = TRUE, d = TRUE) { # by default, give "m" and "d" statistic
+  first.digit <- substr(as.character(x), start = 1, stop = 1) # extract first digit of prop_vote vector
   first.digit <- as.integer(first.digit)
-  Xi <- table(first.digit)/length(prop_vote) # generate observed proportional frequency vector
-  significance <- "Significance levels: *, 10%; **, 5%; ***, 1%" # vecto explaining asterisks
+  Xi <- table(first.digit)/length(x) # generate observed proportional frequency vector
+  significance <- "Significance levels: *, 10%; **, 5%; ***, 1%" # vector explaining asterisks
   
   if(m == T & d == F) {
     m = max(Xi - log10(1 + (1/c(1:9)))) # calculating "m" statistic
@@ -112,7 +114,12 @@ print.benfords(prop_vote, d = F)
 
 ## Create function that creates CSV file containing table -------------
 
-export.benfords <- function(x) {
-  
+getwd()
+setwd("/Users/hyunjoooh/Dropbox/2017_Spring_Washu/Stat_Prog/ProblemSet")
+export.benfords <- function(x){
+  benfords.table <- data.frame(print.benfords(x))
+  print(benfords.table)
+  sink(file = "benfords_output.csv")
 }
+export.benfords(prop_vote)
 
