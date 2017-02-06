@@ -48,14 +48,9 @@ violations(prop_vote, d = F, m = F)
 print.benfords <- function(x, m = TRUE, d = TRUE) { # by default, give "m" and "d" statistic
   first.digit <- substr(as.character(x), start = 1, stop = 1) # extract first digit of prop_vote vector
   first.digit <- as.integer(first.digit)
-<<<<<<< HEAD
   Xi <- table(first.digit)/length(x) # generate observed proportional frequency vector
-  significance <- "Significance levels: *, 10%; **, 5%; ***, 1%" # vector explaining asterisks
-=======
-  Xi <- table(first.digit)/length(prop_vote) # generate observed proportional frequency vector
   significance <- "* 10%; ** 5%; *** 1%" # vecto explaining asterisks
->>>>>>> origin/master
-  
+
   if(m == T & d == F) {
     m = max(Xi - log10(1 + (1/c(1:9)))) # calculating "m" statistic
     m <- if(m >= 1.212) { # add asterisks for critical values of "m" statistic
