@@ -1,36 +1,13 @@
 # R Programming
 # Problem Set 2: Functions 
 # Author: Jonas Markgraf
-
+# =========================
 
 
 ## 1) Calculating violations
 ## ========================
 
-# random sample
-prop_vote <- sample(1:1000000, size=100000)
-
-# extract first digit of numeric value
-first.digit <- as.character(prop_vote)
-first.digit <- substr(first.digit, start=1, stop=1)
-first.digit <- as.integer(first.digit)
-
-# proportional frequency of the integer i
-Xi <- table(first.digit)/length(prop_vote)
-
-# Leemis's m statistic
-m <- rep(NA,9)
-for(i in 1:9){
-  m[i]=(Xi[i] - log(1 + (1/i)))
-}
-max(m)
-
-# Cho-Gains' d
-d=sqrt(sum(m^2))
-
-# Function: violations
-
-# generate sample vector ------------------
+# generate random sample vector ------------------
 prop_vote <- sample(1:1000000, size=100000) 
 
 
@@ -55,7 +32,7 @@ violations <- function(x, m = TRUE, d = TRUE) { # by default, give "m" and "d" s
   }
 }
 
-# examples
+# testing function
 violations(prop_vote)
 violations(prop_vote, m = F)
 violations(prop_vote, d = F, m = F)
@@ -129,7 +106,13 @@ print.benfords <- function(prop_vote, m = TRUE, d = TRUE) { # by default, give "
   }
 }
 
-# examples
+# testing function
+print.benfords(prop_vote)
 print.benfords(prop_vote, d = F)
 
+## Create function that creates CSV file containing table -------------
+
+export.benfords <- function(x) {
+  
+}
 
